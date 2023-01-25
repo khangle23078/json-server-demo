@@ -6,6 +6,10 @@
     }
   ],
   "users": [
-    
+    {
+      "email": "olivier@mail.com",
+      "password": "$2a$10$YTZDLKm9twMoYfxOB18XrupM.UKQmyWBYvQ1PJ8gjjWdXTkv3B0ni",
+      "id": 1
+    }
   ]
 }
