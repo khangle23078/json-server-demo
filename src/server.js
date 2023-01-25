@@ -1,5 +1,4 @@
 const jsonServer = require('json-server')
-const auth = require('json-server-auth');
 const cors = require('cors');
 const dotenv = require('dotenv')
 const server = jsonServer.create()
@@ -8,7 +7,6 @@ const middlewares = jsonServer.defaults()
 dotenv.config()
 
 server.use(middlewares)
-server.use(auth)
 server.use(router)
 server.use(cors)
 server.use(jsonServer.bodyParser)
