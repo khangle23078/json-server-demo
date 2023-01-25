@@ -1,6 +1,7 @@
-const jsonServer = require('json-server')
-const cors = require('cors');
-const dotenv = require('dotenv')
+import jsonServer from 'json-server'
+import cors from 'cors'
+import dotenv from 'dotenv'
+import queryString from 'query-string'
 const server = jsonServer.create()
 const router = jsonServer.router('db.json')
 const middlewares = jsonServer.defaults()
@@ -20,6 +21,29 @@ server.use((req, res, next) => {
    }
    next()
 })
+
+router.render = (req, res) => {
+   const headers = res.getHeaders()
+   const totalCountHeader = headers['x-total-count'];
+   if (req.method === 'GET' || totalCountHeader) {
+      const params = req._parsedUrl.query;
+      console.log(params);
+      const queryParams = queryString.parse(params);
+      console.log(queryParams);
+      const results = {
+         data: res.locals.data,
+         paginate: {
+            _page: Number.parseInt(queryParams._page) || 1,
+            _limit: Number.parseInt(queryParams._limit) || 10,
+            _totalRows: Number.parseInt(totalCountHeader)
+         }
+      }
+
+      return res.jsonp(results)
+   }
+
+   res.jsonp(res.locals.data)
+}
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
