@@ -12,6 +12,16 @@ server.use(router)
 server.use(auth)
 server.use(cors)
 server.use(jsonServer.bodyParser)
+server.use((req, res, next) => {
+   if (req.method === 'POST') {
+      req.body.createAt = new Date.now()
+      req.body.updateAt = new Date.now()
+   }
+   if (req.method === 'PUT') {
+      req.body = new Date.now()
+   }
+   next()
+})
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
