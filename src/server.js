@@ -5,8 +5,11 @@ const dotenv = require('dotenv')
 const server = jsonServer.create()
 const router = jsonServer.router('db.json')
 const middlewares = jsonServer.defaults()
+const app = jsonServer.create();
+
 dotenv.config()
 
+app.db = router.db
 server.use(middlewares)
 server.use(auth)
 server.use(router)
